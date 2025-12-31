@@ -25,7 +25,7 @@ class Game:
     'down_left': (-1, 1)
 }
 
-    # ATLAS = pygame.image.load('graphics/minesweeper_spritesheet.png').convert_alpha()
+    ATLAS = pygame.image.load('graphics/minesweeper_spritesheet.png').convert_alpha()
     ATLAS_ROWS = 2
     ATLAS_COLS = 7
     ATLAS_COORDS = {} # stores the symbol and coords necessary for a blit into memory
@@ -49,6 +49,8 @@ class Game:
         self.curr_game_tiles.update(Game.ALWAYS_NECESSARY_TILES)
         self.initialize_atlas_coords_dict()
         self.display_atlas_coords_dict()
+
+        self.curr_game_tile_dict = None
 
 
     """generatre a 2d array that is only responsible for placing the bombs"""
@@ -95,13 +97,21 @@ class Game:
             for j in range(self.ATLAS_COLS):
                 curr_symbol = self.TILES[tile_index]
                 curr_symbol_coord_data = (j*self.TILE_SIZE, i*self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE)
-                self.ATLAS_COORDS[curr_symbol] = curr_symbol_coord_data
+                curr_symbol_rect = pygame.Rect(curr_symbol_coord_data)
+                self.ATLAS_COORDS[curr_symbol] = curr_symbol_rect
                 tile_index += 1
 
     def display_atlas_coords_dict(self):
         for k,v in self.ATLAS_COORDS.items():
             print(k,v,sep=': ')
-                
+    
+
+    def load_game_tiles_to_memory(self):
+        curr_game_surfaces = {}
+        for symbol in self.curr_game_tiles:
+           self.curr_game_tile_dict[symbol] = Game.ATLAS.subsurface(self.ATLAS_COORDS[symbol])
+            
+
 
 
 
