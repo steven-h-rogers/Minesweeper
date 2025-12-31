@@ -35,7 +35,7 @@ class Game:
 
 
     TILES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '!', 'X', '*', ' ', '<', '?']
-    NECESSARY_TILES = ['!', ' ', '<', '?', 'X', '*']
+    ALWAYS_NECESSARY_TILES = ['!', ' ', '<', '?', 'X', '*']
 
     def __init__(self, dimensions, num_bombs):
         self.dimensions = dimensions
@@ -46,7 +46,9 @@ class Game:
 
         self.bomb_map = self.initialize_bomb_map(self.rows, self.cols, self.bomb_probability)
         self.curr_game_tiles = self.get_unique_tiles(self.bomb_map)
-        self.curr_game_tiles.update(Game.NECESSARY_TILES)
+        self.curr_game_tiles.update(Game.ALWAYS_NECESSARY_TILES)
+        self.initialize_atlas_coords_dict()
+        self.display_atlas_coords_dict()
 
 
     """generatre a 2d array that is only responsible for placing the bombs"""
@@ -87,8 +89,20 @@ class Game:
         return unique_tiles
     
 
-    def initialize_atlas_dict(self):
-        for i in range
+    def initialize_atlas_coords_dict(self):
+        tile_index = 0
+        for i in range(self.ATLAS_ROWS):
+            for j in range(self.ATLAS_COLS):
+                curr_symbol = self.TILES[tile_index]
+                curr_symbol_coord_data = (j*self.TILE_SIZE, i*self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE)
+                self.ATLAS_COORDS[curr_symbol] = curr_symbol_coord_data
+                tile_index += 1
+
+    def display_atlas_coords_dict(self):
+        for k,v in self.ATLAS_COORDS.items():
+            print(k,v,sep=': ')
+                
+
 
 
 
