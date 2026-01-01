@@ -1,0 +1,18 @@
+Tile
+
+##Class Variables##
+-MemoryLoader---(an instance of a MemoryLoader which will store a dictionary of all of the
+tiles that could be used within any game as well as all of the tiles that are used for the 
+specific game board instance)
+-possible_tiles---a list of all the possible tiles that could be displayed
+
+##Instance Variables##
+-isHidden---(a boolean that keeps track of whether this tile has been revealed or not)
+-hidden_state---(a char that represents things like bombs and numbers)
+-not_hidden_state---(a char that represents things like blank tile, flag, question tile)
+-displayed---(a char that represents the actual tile that is being displayed on the screen.
+This accounts for special scenarios like when the user clicks on
+a bomb and the exploding bomb needs to be displayed instead of 
+a regular one)
+
+
