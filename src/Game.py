@@ -11,6 +11,8 @@ bombs on bomb_map are represented with !
 everything else on bomb_map is amount of adjacent bombs at that point
 """
 
+print(AtlasManager.atlas_manager)
+
 
 class Game:
 
@@ -33,7 +35,6 @@ class Game:
     TILES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '!', 'X', '*', ' ', '<', '?'] # All possible tiles
 
     def __init__(self, dimensions, num_bombs):
-        self.ATLAS = AtlasManager.
         self.dimensions = dimensions
         self.cols, self.rows = self.dimensions
 
