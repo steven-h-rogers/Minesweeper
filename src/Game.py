@@ -11,7 +11,6 @@ bombs on bomb_map are represented with !
 everything else on bomb_map is amount of adjacent bombs at that point
 """
 
-print(AtlasManager.atlas_manager)
 
 
 class Game:
@@ -42,6 +41,8 @@ class Game:
         self.bomb_probability = num_bombs/(self.rows*self.cols)
 
         self.bomb_map = self.initialize_bomb_map(self.rows, self.cols, self.bomb_probability)
+        assets = AtlasManager.AtlasManager()
+        print(assets)
 
 
 
