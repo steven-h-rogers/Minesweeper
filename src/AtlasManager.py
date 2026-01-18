@@ -2,7 +2,7 @@ import pygame
 class AtlasManager:
 
     def __init__(self):
-        self.GAME_ASSETS = None
+        self.GAME_ASSETS = {}
         self.ATLAS = None
 
         # Dimensions, order, and sizes are hardcoded into the spritesheet
@@ -19,7 +19,7 @@ class AtlasManager:
                     curr_symbol = self.TILES[tile_index]
                     curr_symbol_coord_data = (j*self.TILE_SIZE, i*self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE)
                     curr_symbol_rect = pygame.Rect(curr_symbol_coord_data)
-                    self.GAME_ASSETS[curr_symbol] = pygame.Surface.subsurface(curr_symbol_rect)
+                    self.GAME_ASSETS[curr_symbol] = self.ATLAS.subsurface(curr_symbol_rect)
                     tile_index += 1
 
     def load_atlas(self):
@@ -27,5 +27,7 @@ class AtlasManager:
 
     def get_Game_Assets(self):
         return self.GAME_ASSETS
+    
+atlas_manager = AtlasManager()
     
 

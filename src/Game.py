@@ -2,8 +2,7 @@ import pygame
 import Tile
 import random
 import numpy as np
-import AtlasManager
-
+from AtlasManager import atlas_manager
 """win condition is once all bombs are flagged and all non bombs are revealed
 rows = y axis
 cols = x axis
@@ -41,16 +40,17 @@ class Game:
         self.bomb_probability = num_bombs/(self.rows*self.cols)
 
         self.bomb_map = self.initialize_bomb_map(self.rows, self.cols, self.bomb_probability)
-        assets = AtlasManager.AtlasManager()
-        print(assets)
-
-
+        self.atlas = atlas_manager
+        self.atlas.load_atlas()
+        self.atlas.load_tiles_to_memory()
+        print(atlas_manager.get_Game_Assets)
 
     """generatre a 2d array that is only responsible for placing the bombs"""
     def initialize_bomb_map(self, rows, cols, bomb_probability):
         bomb_map = np.random.random((rows, cols)) < bomb_probability #randomly place the bombs based on probability
         return self.generate_proximity_map(bomb_map.tolist())
         
+
     """from the initial bomb distribution map, convert bombs to ! and all other tiles 
     to adjacent bomb map"""
     def generate_proximity_map(self, bomb_map):
@@ -76,6 +76,7 @@ class Game:
         for row in bomb_map:
             print(row)
     
+
     def display_dict(self, dict_to_print):
         for k,v in dict_to_print.items():
             print(k,v,sep=': ')
