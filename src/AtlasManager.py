@@ -5,6 +5,9 @@ class AtlasManager:
         self.GAME_ASSETS = {}
         self.ATLAS = None
 
+        self.loaded_atlas = False
+        self.loaded_tiles = False
+
         # Dimensions, order, and sizes are hardcoded into the spritesheet
         self.ATLAS_ROWS = 2
         self.ATLAS_COLS = 8
@@ -23,10 +26,14 @@ class AtlasManager:
                     tile_index += 1
 
     def load_atlas(self):
-        self.ATLAS = pygame.image.load('graphics/minesweeper_spritesheet.png').convert_alpha()
+        if self.loaded_atlas == False:
+            self.loaded_atlas = True
+            self.ATLAS = pygame.image.load('graphics/minesweeper_spritesheet.png').convert_alpha()
 
     def get_Game_Assets(self):
-        return self.GAME_ASSETS
+        if self.loaded_tiles == False:
+            self.loaded_tiles = True
+            return self.GAME_ASSETS
     
 atlas_manager = AtlasManager()
     

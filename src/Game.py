@@ -32,18 +32,21 @@ class Game:
     TILE_SIZE = 32 # Each tile in the sheet is 32x32
     TILES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '!', 'X', '*', ' ', '<', '?'] # All possible tiles
 
-    def __init__(self, dimensions, num_bombs):
+    def __init__(self, dimensions, num_bombs, screen):
         self.dimensions = dimensions
         self.cols, self.rows = self.dimensions
 
         self.num_bombs = num_bombs
         self.bomb_probability = num_bombs/(self.rows*self.cols)
 
+        self.screen = screen
+
         self.bomb_map = self.initialize_bomb_map(self.rows, self.cols, self.bomb_probability)
+
         self.atlas = atlas_manager
         self.atlas.load_atlas()
         self.atlas.load_tiles_to_memory()
-        print(atlas_manager.get_Game_Assets)
+        self.render_board()
 
     """generatre a 2d array that is only responsible for placing the bombs"""
     def initialize_bomb_map(self, rows, cols, bomb_probability):
@@ -80,6 +83,17 @@ class Game:
     def display_dict(self, dict_to_print):
         for k,v in dict_to_print.items():
             print(k,v,sep=': ')
+
+    def render_tile(self, col, row):
+        selected_tile = self.bomb_map[col][row]
+        tile_surface = self.atlas.GAME_ASSETS[selected_tile]
+        self.screen.blit(tile_surface, (col*self.atlas.TILE_SIZE, row*self.atlas.TILE_SIZE))
+
+    def render_board(self):
+        for i in range(len(self.bomb_map)):
+            for j in range(len(self.bomb_map)):
+                self.render_tile(j, i)
+
     
 
 
