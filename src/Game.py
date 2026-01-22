@@ -10,8 +10,6 @@ bombs on bomb_map are represented with !
 everything else on bomb_map is amount of adjacent bombs at that point
 """
 
-
-
 class Game:
 
     # Directions dict to check adjacent cells
@@ -44,8 +42,7 @@ class Game:
         self.bomb_map = self.initialize_bomb_map(self.rows, self.cols, self.bomb_probability)
 
         self.atlas = atlas_manager
-        self.atlas.load_atlas()
-        self.atlas.load_tiles_to_memory()
+        self.atlas.initialize()
         self.render_board()
 
     """generatre a 2d array that is only responsible for placing the bombs"""
@@ -83,6 +80,9 @@ class Game:
     def display_dict(self, dict_to_print):
         for k,v in dict_to_print.items():
             print(k,v,sep=': ')
+
+
+
 
     def render_tile(self, col, row):
         selected_tile = self.bomb_map[col][row]

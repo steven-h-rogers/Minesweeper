@@ -1,16 +1,31 @@
-import Game
+# import Game
+from itertools import cycle
 
 class Tile:
-    
-    def __init__(self, displayed_state, hidden_state = ' ', isHidden = True):
+    hidden_states = cycle(('<', '?' ' ')) # Corresponds to blank tile, flagged tile, questioned tile
+    # bomb states are represented as !: bomb, X: incorrectly marked bomb, *: activated bomb
 
-        self.ALWAYS_NECESSARY_TILES = Game.ALWAYS_NECESSARY_TILES
-        self.displayed_state = displayed_state
-        self.displayed_state_img = None # need better software design/object definitions before moving forward
-        self.displayed_img = None # There may be different images displayed than what is actually the state of the tile
+    def __init__(self, revealed_state, hidden_state = ' ', isHidden = True):
+        self.revealed_state = revealed_state
         self.hidden_state = hidden_state
-        self.hidden_state_img = None # user can cycle through ? < ' ' etc so this shouldn't be one fixed value
-
-
-
         self.isHidden = isHidden
+
+    # TODO: improve implementation so that correct hidden state and correct bomb state are displayed
+    def get_displayed_state(self):
+        if self.isHidden:
+            return self.hidden_state
+        else: return self.revealed_state
+
+    def cycle_hidden_state(self):
+        self.hidden_state = next(Tile.hidden_states)
+
+    def reveal(self):
+        self.isHidden = False
+
+bomb = Tile('!')
+print(bomb.get_displayed_state())
+print(bomb.revealed_state)
+bomb.cycle_hidden_state()
+print(bomb.hidden_state)
+bomb.cycle_hidden_state()
+print(bomb.hidden_state)

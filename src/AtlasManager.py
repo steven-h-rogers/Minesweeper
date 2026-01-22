@@ -4,6 +4,7 @@ class AtlasManager:
     def __init__(self):
         self.GAME_ASSETS = {}
         self.ATLAS = None
+        self.initialized = False
 
         self.loaded_atlas = False
         self.loaded_tiles = False
@@ -13,6 +14,15 @@ class AtlasManager:
         self.ATLAS_COLS = 8
         self.TILES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '!', 'X', '*', ' ', '<', '?'] # All possible tiles
         self.TILE_SIZE = 32
+
+    # only call this after pygame has been initialized 
+    def initialize(self):
+        if self.initialized == False:
+            self.load_atlas()
+            self.load_tiles_to_memory()
+            self.initialized = True
+        else: print("Atlas Manager already initialized")
+
 
     def load_tiles_to_memory(self):
         tile_index = 0
