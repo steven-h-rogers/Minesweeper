@@ -22,10 +22,10 @@ class Tile:
     def reveal(self):
         self.isHidden = False
 
-bomb = Tile('!')
-print(bomb.get_displayed_state())
-print(bomb.revealed_state)
-bomb.cycle_hidden_state()
-print(bomb.hidden_state)
-bomb.cycle_hidden_state()
-print(bomb.hidden_state)
+# bomb = Tile('!')
+# print(bomb.get_displayed_state())
+# print(bomb.revealed_state)
+# bomb.cycle_hidden_state()
+# print(bomb.hidden_state)
+# bomb.cycle_hidden_state()
+# print(bomb.hidden_state)

@@ -3,6 +3,7 @@ import Tile
 import random
 import numpy as np
 from AtlasManager import atlas_manager
+import Constants
 """win condition is once all bombs are flagged and all non bombs are revealed
 rows = y axis
 cols = x axis
@@ -11,24 +12,6 @@ everything else on bomb_map is amount of adjacent bombs at that point
 """
 
 class Game:
-
-    # Directions dict to check adjacent cells
-    CHECK_DIRECTIONS = {
-    'left': (-1, 0),
-    'up_left': (-1, -1),
-    'up': (0, -1),
-    'up_right': (1, -1),
-    'right': (1,0),
-    'down_right': (1, 1),
-    'down': (0, 1),
-    'down_left': (-1, 1)
-}
-    # Dimensions are baked into the spritesheet
-    ATLAS_ROWS = 2
-    ATLAS_COLS = 8
-
-    TILE_SIZE = 32 # Each tile in the sheet is 32x32
-    TILES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '!', 'X', '*', ' ', '<', '?'] # All possible tiles
 
     def __init__(self, dimensions, num_bombs, screen):
         self.dimensions = dimensions
@@ -62,7 +45,7 @@ class Game:
                     bomb_map[i][j] = '!'
                 else: #TODO: maybe make this function a bit more single responsibility compatible and have the checking of tiles live in it's own function to improve readability
                     adjacent_bombs = 0
-                    for direction in Game.CHECK_DIRECTIONS.values():
+                    for direction in Constants.CHECK_DIRECTIONS.values():
                         col_dir = direction[0]
                         row_dir = direction[1]
                         if i+row_dir < rows and i+row_dir>=0 and j+col_dir < cols and j+col_dir >=0:
@@ -87,7 +70,7 @@ class Game:
     def render_tile(self, col, row):
         selected_tile = self.bomb_map[col][row]
         tile_surface = self.atlas.GAME_ASSETS[selected_tile]
-        self.screen.blit(tile_surface, (col*self.atlas.TILE_SIZE, row*self.atlas.TILE_SIZE))
+        self.screen.blit(tile_surface, (col*Constants.TILE_SIZE, row*Constants.TILE_SIZE))
 
     def render_board(self):
         for i in range(len(self.bomb_map)):

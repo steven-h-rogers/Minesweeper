@@ -1,4 +1,5 @@
 import pygame
+import Constants
 class AtlasManager:
 
     def __init__(self):
@@ -8,12 +9,6 @@ class AtlasManager:
 
         self.loaded_atlas = False
         self.loaded_tiles = False
-
-        # Dimensions, order, and sizes are hardcoded into the spritesheet
-        self.ATLAS_ROWS = 2
-        self.ATLAS_COLS = 8
-        self.TILES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '!', 'X', '*', ' ', '<', '?'] # All possible tiles
-        self.TILE_SIZE = 32
 
     # only call this after pygame has been initialized 
     def initialize(self):
@@ -26,11 +21,11 @@ class AtlasManager:
 
     def load_tiles_to_memory(self):
         tile_index = 0
-        for i in range(self.ATLAS_ROWS):
-            for j in range(self.ATLAS_COLS):
+        for i in range(Constants.ATLAS_ROWS):
+            for j in range(Constants.ATLAS_COLS):
                 if tile_index < 15:
-                    curr_symbol = self.TILES[tile_index]
-                    curr_symbol_coord_data = (j*self.TILE_SIZE, i*self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE)
+                    curr_symbol = Constants.TILES[tile_index]
+                    curr_symbol_coord_data = (j*Constants.TILE_SIZE, i*Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE)
                     curr_symbol_rect = pygame.Rect(curr_symbol_coord_data)
                     self.GAME_ASSETS[curr_symbol] = self.ATLAS.subsurface(curr_symbol_rect)
                     tile_index += 1
