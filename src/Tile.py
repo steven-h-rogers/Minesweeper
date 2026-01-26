@@ -9,6 +9,9 @@ class Tile:
         self.revealed_state = revealed_state
         self.hidden_state = hidden_state
         self.isHidden = isHidden
+        self.row
+        self.col
+        
 
     # TODO: improve implementation so that correct hidden state and correct bomb state are displayed
     def get_displayed_state(self):
