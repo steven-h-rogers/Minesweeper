@@ -1,4 +1,4 @@
-import Tile
+from Tile import Tile
 class Board:
 
     def __init__(self, proximity_map):
@@ -9,8 +9,8 @@ class Board:
 
     def convert_prox_to_board(self):
         board = self.proximity_map
-        for i in range(len(self.rows)):
-            for j in range(len(self.cols)):
+        for i in range(self.rows):
+            for j in range(self.cols):
                    board[i][j] = Tile(self.proximity_map[i][j])
         return board
 

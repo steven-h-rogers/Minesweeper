@@ -4,6 +4,8 @@ import random
 import numpy as np
 from AtlasManager import atlas_manager
 import Constants
+from MapGenerator import MapGenerator
+from Board import Board
 """win condition is once all bombs are flagged and all non bombs are revealed
 rows = y axis
 cols = x axis
@@ -16,66 +18,28 @@ class Game:
     def __init__(self, dimensions, num_bombs, screen):
         self.dimensions = dimensions
         self.cols, self.rows = self.dimensions
-
         self.num_bombs = num_bombs
-        self.bomb_probability = num_bombs/(self.rows*self.cols)
 
         self.screen = screen
 
-        self.bomb_map = self.initialize_bomb_map(self.rows, self.cols, self.bomb_probability)
-
         self.atlas = atlas_manager
         self.atlas.initialize()
-        self.render_board()
 
-    """generatre a 2d array that is only responsible for placing the bombs"""
-    def initialize_bomb_map(self, rows, cols, bomb_probability):
-        bomb_map = np.random.random((rows, cols)) < bomb_probability #randomly place the bombs based on probability
-        return self.generate_proximity_map(bomb_map.tolist())
-        
+        self.map_gen = MapGenerator(dimensions, num_bombs)
+        self.board = Board(self.map_gen.get_display_map())
 
-    """from the initial bomb distribution map, convert bombs to ! and all other tiles 
-    to adjacent bomb map"""
-    def generate_proximity_map(self, bomb_map):
-        rows = len(bomb_map)
-        cols = len(bomb_map[0])
-        for i in range(rows):
-            for j in range(cols):
-                if bomb_map[i][j] == True:
-                    bomb_map[i][j] = '!'
-                else: #TODO: maybe make this function a bit more single responsibility compatible and have the checking of tiles live in it's own function to improve readability
-                    adjacent_bombs = 0
-                    for direction in Constants.CHECK_DIRECTIONS.values():
-                        col_dir = direction[0]
-                        row_dir = direction[1]
-                        if i+row_dir < rows and i+row_dir>=0 and j+col_dir < cols and j+col_dir >=0:
-                            if bomb_map[i+row_dir][j+col_dir] == '!' or bomb_map[i+row_dir][j+col_dir] == True:
-                                adjacent_bombs += 1
-                    bomb_map[i][j] = str(adjacent_bombs)
-        return bomb_map
-    
+        self.render_board(self.board)
 
-    def display_bomb_map(self, bomb_map):
-        for row in bomb_map:
-            print(row)
-    
-
-    def display_dict(self, dict_to_print):
-        for k,v in dict_to_print.items():
-            print(k,v,sep=': ')
-
-
-
-
-    def render_tile(self, col, row):
-        selected_tile = self.bomb_map[col][row]
-        tile_surface = self.atlas.GAME_ASSETS[selected_tile]
+   
+    def render_tile(self, board, col, row):
+        selected_tile = board.board[col][row]
+        tile_surface = self.atlas.GAME_ASSETS[selected_tile.hidden_state]
         self.screen.blit(tile_surface, (col*Constants.TILE_SIZE, row*Constants.TILE_SIZE))
 
-    def render_board(self):
-        for i in range(len(self.bomb_map)):
-            for j in range(len(self.bomb_map)):
-                self.render_tile(j, i)
+    def render_board(self, board):
+        for i in range(board.rows):
+            for j in range(board.cols):
+                self.render_tile(board, j, i)
 
     
 

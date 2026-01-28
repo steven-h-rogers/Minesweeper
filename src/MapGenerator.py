@@ -49,4 +49,7 @@ class MapGenerator:
             print(row)
         print('\n\n')
 
+    def get_display_map(self):
+        return self.proximity_map
+
 generator = MapGenerator((10,10), 10)
