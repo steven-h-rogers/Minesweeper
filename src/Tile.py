@@ -8,22 +8,29 @@ class Tile:
     def __init__(self, revealed_state, hidden_state = ' ', isHidden = True):
         self.revealed_state = revealed_state
         self.hidden_state = hidden_state
+        self.displayed_state = hidden_state
         self.isHidden = isHidden
         # self.row
         # self.col
 
 
     # TODO: improve implementation so that correct hidden state and correct bomb state are displayed
-    def get_displayed_state(self):
+    def change_displayed_state(self):
         if self.isHidden:
-            return self.hidden_state
-        else: return self.revealed_state
+            self.displayed_state = self.hidden_state
+        else: 
+            self.displayed_state = self.revealed_state
 
     def cycle_hidden_state(self):
         self.hidden_state = next(Tile.hidden_states)
 
     def reveal(self):
         self.isHidden = False
+        self.change_displayed_state()
+        print(self.hidden_state, self.revealed_state, self.isHidden)
+
+
+    # TODO: migrate tile render to this object
 
 # bomb = Tile('!')
 # print(bomb.get_displayed_state())

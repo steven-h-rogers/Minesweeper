@@ -31,15 +31,7 @@ class Game:
         self.render_board(self.board)
 
    
-    def render_tile(self, board, col, row):
-        selected_tile = board.board[col][row]
-        tile_surface = self.atlas.GAME_ASSETS[selected_tile.hidden_state]
-        self.screen.blit(tile_surface, (col*Constants.TILE_SIZE, row*Constants.TILE_SIZE))
 
-    def render_board(self, board):
-        for i in range(board.rows):
-            for j in range(board.cols):
-                self.render_tile(board, j, i)
 
     
 
