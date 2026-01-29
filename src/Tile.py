@@ -16,7 +16,7 @@ class Tile:
 
     # TODO: improve implementation so that correct hidden state and correct bomb state are displayed
     def change_displayed_state(self):
-        if self.isHidden:
+        if self.isHidden == True:
             self.displayed_state = self.hidden_state
         else: 
             self.displayed_state = self.revealed_state

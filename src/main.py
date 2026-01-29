@@ -1,12 +1,21 @@
 import pygame, sys
-from Game import Game
 import Constants
+from Board import Board
+from MapGenerator import MapGenerator
+
 
 
 pygame.init()
+
+
 screen = pygame.display.set_mode((50*32,50*32), pygame.SCALED | pygame.FULLSCREEN)
 clock = pygame.time.Clock()
-game = Game((50,50), 300, screen)
+
+dimensions = (50,50)
+num_bombs = 400
+
+map_gen = MapGenerator(dimensions, num_bombs)
+board = Board(map_gen.get_display_map(), screen)
 
 running = True
 
@@ -20,7 +29,10 @@ while running:
             if event.button == 1:
                 raw_x_pos, raw_y_pos = pygame.mouse.get_pos()
                 board_x_pos, board_y_pos = raw_x_pos//Constants.TILE_SIZE, raw_y_pos//Constants.TILE_SIZE
-                game.board.board[board_y_pos][board_x_pos].reveal()
+                board.board[board_x_pos][board_y_pos].reveal()
+    board.render_board()
+    
+
 
 
     pygame.display.flip()

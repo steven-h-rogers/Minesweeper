@@ -1,13 +1,20 @@
 from Tile import Tile
 import Constants
-
+from Assets import Assets
 class Board:
 
-    def __init__(self, proximity_map):
+    def __init__(self, proximity_map, screen):
+        self.screen = screen
         self.proximity_map = proximity_map
         self.rows = len(proximity_map)
         self.cols = len(proximity_map[0])
         self.board = self.convert_prox_to_board() # This stores the list as a 2d array of tiles
+
+        self.assets = Assets()
+        self.atlas = self.assets.atlas
+        self.atlas.initialize()
+
+        
 
     def convert_prox_to_board(self):
         board = self.proximity_map
@@ -18,13 +25,13 @@ class Board:
     
     def render_tile(self, col, row):
         selected_tile = self.board[col][row]
-        tile_surface = self.atlas.GAME_ASSETS[selected_tile.hidden_state]
+        tile_surface = self.atlas.GAME_ASSETS[selected_tile.displayed_state]
         self.screen.blit(tile_surface, (col*Constants.TILE_SIZE, row*Constants.TILE_SIZE))
 
     def render_board(self):
-        for i in range(self.board.rows):
-            for j in range(self.board.cols):
-                self.render_tile(self.board, j, i)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.render_tile(j, i)
     
     # TODO: migrate board render to this object
 
