@@ -33,7 +33,7 @@ class AtlasManager:
     def load_atlas(self):
         if self.loaded_atlas == False:
             self.loaded_atlas = True
-            self.ATLAS = pygame.image.load('graphics/minesweeper_spritesheet.png').convert_alpha()
+            self.ATLAS = pygame.image.load('graphics/minesweeper_spritesheetv2.png').convert_alpha()
 
     def get_Game_Assets(self):
         if self.loaded_tiles == False:

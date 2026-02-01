@@ -11,8 +11,8 @@ pygame.init()
 screen = pygame.display.set_mode((50*32,50*32), pygame.SCALED | pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 
-dimensions = (50,50)
-num_bombs = 400
+dimensions = (10,10)
+num_bombs = 20
 
 map_gen = MapGenerator(dimensions, num_bombs)
 board = Board(map_gen.get_display_map(), screen)
