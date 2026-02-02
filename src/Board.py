@@ -50,6 +50,7 @@ class Board:
         else:
             root.explode()
             self.reveal_entire_board()
+            return 'GAME OVER'
     
     def handle_r_click(self, row, col):
         root = self.board[row][col]
