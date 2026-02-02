@@ -2,16 +2,16 @@
 from itertools import cycle
 
 class Tile:
-    hidden_states = cycle(('<', '?' ' ')) # Corresponds to blank tile, flagged tile, questioned tile
+    hidden_states = cycle(('<', '?' ,' ')) # Corresponds to blank tile, flagged tile, questioned tile
     # bomb states are represented as !: bomb, X: incorrectly marked bomb, *: activated bomb
 
-    def __init__(self, revealed_state, hidden_state = ' ', isHidden = True):
+    def __init__(self, revealed_state,  row, col, hidden_state = ' ', isHidden = True):
         self.revealed_state = revealed_state
         self.hidden_state = hidden_state
         self.displayed_state = hidden_state
         self.isHidden = isHidden
-        # self.row
-        # self.col
+        self.row = row
+        self.col = col
 
 
     # TODO: improve implementation so that correct hidden state and correct bomb state are displayed
@@ -21,21 +21,38 @@ class Tile:
         else: 
             self.displayed_state = self.revealed_state
 
+
     def cycle_hidden_state(self):
-        self.hidden_state = next(Tile.hidden_states)
+        if self.isHidden:
+            self.hidden_state = next(Tile.hidden_states)
+            self.displayed_state = self.hidden_state
+            print("hidden state is now: ", self.hidden_state)
 
     def reveal(self):
         self.isHidden = False
         self.change_displayed_state()
-        print(self.hidden_state, self.revealed_state, self.isHidden)
+        # print(self.hidden_state, self.revealed_state, self.isHidden)
 
+    def explode(self):
+        self.revealed_state = '*'
+    
+    def incorrectly_marked(self):
+        self.revealed_state = 'X'
 
-    # TODO: migrate tile render to this object
+bomb = Tile('!', 0, 0)
+two = Tile('2', 0, 1)
 
-# bomb = Tile('!')
-# print(bomb.get_displayed_state())
-# print(bomb.revealed_state)
-# bomb.cycle_hidden_state()
-# print(bomb.hidden_state)
-# bomb.cycle_hidden_state()
-# print(bomb.hidden_state)
+print(bomb.displayed_state)
+print(two.displayed_state)
+
+bomb.cycle_hidden_state()
+two.cycle_hidden_state()
+
+print(bomb.displayed_state)
+print(two.displayed_state)
+
+bomb.change_displayed_state()
+two.change_displayed_state()
+
+print(bomb.displayed_state)
+print(two.displayed_state)
