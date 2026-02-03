@@ -42,20 +42,21 @@ class Board:
 
     def handle_l_click(self, row, col):
         root = self.board[row][col]
-        if root.revealed_state != '!':
-            if re.search(r"[1-8]", root.revealed_state) and root.isHidden:
-                self.reveal_single_tile(row, col)
-            if re.search(r"[1-8]", root.revealed_state) and root.isHidden is False:
-                if self.reveal_if_bombs_marked(root.row, root.col) == 'INCORRECTLY MARKED':
-                    self.reveal_entire_board()
-                    return 'GAME OVER'
-            elif root.revealed_state == '0':
-                print("clicked empty tile")
-                self.reveal_empty_adjacents(root)
-        else:
-            root.explode()
-            self.reveal_entire_board()
-            return 'GAME OVER'
+        if root.displayed_state != '<':
+            if root.revealed_state != '!':
+                if re.search(r"[1-8]", root.revealed_state) and root.isHidden:
+                    self.reveal_single_tile(row, col)
+                if re.search(r"[1-8]", root.revealed_state) and root.isHidden is False:
+                    if self.reveal_if_bombs_marked(root.row, root.col) == 'INCORRECTLY MARKED':
+                        self.reveal_entire_board()
+                        return 'GAME OVER'
+                elif root.revealed_state == '0':
+                    print("clicked empty tile")
+                    self.reveal_empty_adjacents(root)
+            else:
+                root.explode()
+                self.reveal_entire_board()
+                return 'GAME OVER'
     
     def handle_r_click(self, row, col):
         root = self.board[row][col]
