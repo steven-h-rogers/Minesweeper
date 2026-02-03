@@ -7,10 +7,12 @@ from MapGenerator import MapGenerator
 
 pygame.init()
 
-
+# TODO: Make the screen zoomable and moveable a bit
+# TODO: Fix bug where user can click off the right and left hand side of the board and still activate tiles
 screen = pygame.display.set_mode((50*32,50*32), pygame.SCALED | pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 
+# TODO: add a main menu/deathscreen where user can pick dimensions and num_bombs
 def generate_new_game(dimensions=(50,50), num_bombs=250):
     map_gen = MapGenerator(dimensions, num_bombs)
     board = Board(map_gen.get_display_map(), num_bombs, screen)
@@ -28,7 +30,8 @@ while running:
             print('quitting')
             pygame.quit()
             sys.exit()
-            
+        
+        # TODO: cleanup the gameloop by implementing an eventhandler object?
         if event.type == pygame.MOUSEBUTTONDOWN:
             raw_x_pos, raw_y_pos = pygame.mouse.get_pos()
             board_x_pos, board_y_pos = raw_x_pos//Constants.TILE_SIZE, raw_y_pos//Constants.TILE_SIZE
