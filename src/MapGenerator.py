@@ -22,9 +22,17 @@ class MapGenerator:
         return proximity_map
 
     """generatre a 2d array that is only responsible for placing the bombs"""
+    # def initialize_bomb_map(self):
+    #     bomb_map = np.random.random((self.rows, self.cols)) < self.bomb_probability #randomly place the bombs based on probability
+    #     return bomb_map
+    
     def initialize_bomb_map(self):
-        bomb_map = np.random.random((self.rows, self.cols)) < self.bomb_probability #randomly place the bombs based on probability
+        flattened_bomb_map = np.zeros(self.rows*self.cols, dtype=bool)
+        flattened_bomb_map[:self.num_bombs] = True
+        np.random.shuffle(flattened_bomb_map)
+        bomb_map = flattened_bomb_map.reshape(self.rows, self.cols)
         return bomb_map
+
         
     """in place labelling of the 2D bomb map into bombs (!) and adjacent bombs (0-8)"""
     def label_adjacent_bombs(self, bomb_map):

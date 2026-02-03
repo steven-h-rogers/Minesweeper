@@ -2,10 +2,10 @@
 from itertools import cycle
 
 class Tile:
-    hidden_states = cycle(('<', '?' ,' ')) # Corresponds to blank tile, flagged tile, questioned tile
     # bomb states are represented as !: bomb, X: incorrectly marked bomb, *: activated bomb
 
     def __init__(self, revealed_state,  row, col, hidden_state = ' ', isHidden = True):
+        self.hidden_states = cycle(('<', '?' ,' ')) # Corresponds to blank tile, flagged tile, questioned tile
         self.revealed_state = revealed_state
         self.hidden_state = hidden_state
         self.displayed_state = hidden_state
@@ -24,7 +24,7 @@ class Tile:
 
     def cycle_hidden_state(self):
         if self.isHidden:
-            self.hidden_state = next(Tile.hidden_states)
+            self.hidden_state = next(self.hidden_states)
             self.displayed_state = self.hidden_state
             print("hidden state is now: ", self.hidden_state)
 
